@@ -1,0 +1,1 @@
+# sqa-html5-storage
