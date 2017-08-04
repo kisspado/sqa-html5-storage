@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">>
+	<title>Document</title>
+</head>
+<body>
+	Name
+	<input type="text" id="txtName">
+	<button onclick="addName2()">Add to Local Storage</button>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Names</th>
+				<th>Gender</th>
+			</tr>
+		</thead>
+		<tbody id = "tblNames">
+			
+		</tbody>
+	</table>
+
+
+
+	<script>
+	sample1();
+	function sample1(){
+		let msg = "Hello World"
+		console.log(msg);
+		localStorage.setItem('msg', 'Hello');
+		sessionStorage.setItem('msg', 'World');
+
+		let strl = localStorage.getItem('msg');
+		let strl2 = sessionStorage.getItem('msg');
+		let strl3 = strl + strl2;
+		console.log(strl3);
+
+		//localStorage.removeItem('msg');
+		localStorage.clear();
+		sessionStorage.clear();
+	}
+	function addName(){
+		let name = document.querySelector('#txtName').value;
+		console.log(name);
+		localStorage.setItem('name', name);
+		sessionStorage.setItem('name', name);
+	}
+	let names = ['Clyde', 'Chester'];
+	function addName1(){
+		let names = ['Clyde', 'Chester'];
+		let name = document.querySelector('#txtName').value;
+		names.push(name);
+		localStorage.setItem('names',names);
+		let lsNames = localStorage.getItem('names');
+		let listOfNames = lsNames.split(',')
+		console.log(listOfNames[0]);
+	}
+	let json_names = [{
+		name: "Clyde",
+		Gender: "M"
+	},{
+		name: "Chester",
+		Gender: "F"
+	}
+	];
+	function addName2(){
+		let name = document.querySelector('#txtName').value;
+		let newName = {
+			name: name,
+			Gender: "M"
+		};
+		json_names.push(newName);
+		console.log(json_names);
+		let jns = JSON.stringify(json_names);
+		localStorage.setItem('json_names',jns);
+		let json_retrieve = JSON.parse(localStorage.getItem('json_names'));
+		console.log(json_retrieve);
+		console.log("Name is " + json_retrieve[0].name);
+		console.log("Gender is " + json_retrieve[0].Gender);
+		 /*let html = `
+		 	<tr>
+		 		<td>${json_retrieve[0].name}</td>
+		 		<td>${json_retrieve[0].Gender}</td>
+		 	</tr>
+		 	<tr>
+		 		<td>${json_retrieve[1].name}</td>
+		 		<td>${json_retrieve[1].Gender}</td>
+		 	</tr>
+		 `;*/
+		let html = ``;
+		json_retrieve.map((name)=>{
+			/*console.log(name.name);
+			console.log(name.Gender);
+			console.log("----------")*/
+			html += `
+			<tr>
+		 		<td>${name.name}</td>
+		 		<td>${name.Gender}</td>
+		 	</tr>
+		 	
+		 	`;
+
+		});
+
+		/*for (var i = 0; i < json_retrieve.length; i++) {
+			console.log(json_retrieve[0].name);
+			console.log(json_retrieve[1].Gender);
+			console.log("----------")
+		}*/
+		document.querySelector('#tblNames').innerHTML = html;
+	}
+	</script>
+
+</body>
+</html>>
